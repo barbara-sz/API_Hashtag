@@ -45,7 +45,7 @@ def cadastro():
     if Usuario.query.filter_by(email=email).first() and "botao_cadastro" in request.form:
         flash("E-mail já cadastrado. Faça login para continuar.", 'alert-danger')
     elif form_cadastro.validate_on_submit() and token_informado == token:
-        senha = bcrypt.generate_password_hash(form_cadastro.senha.data)
+        senha = bcrypt.generate_password_hash(form_cadastro.senha.data).decode("utf-8")
         usuario = Usuario(email=email, senha=senha)
         db.session.add(usuario)
         db.session.commit()
