@@ -9,7 +9,10 @@ load_dotenv()
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///logs_webhook.db"
+if os.getenv('DATABASE_URL'):
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('DATABASE_URL')
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///logs_webhook.db"
 app.config["SECRET_KEY"] = os.getenv('SECRET_KEY')
 
 db = SQLAlchemy(app)
