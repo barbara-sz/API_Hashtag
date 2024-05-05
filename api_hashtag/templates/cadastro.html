@@ -1,0 +1,55 @@
+{% extends "modelo.html" %}
+
+{% block titulo %}
+Consulta API - Cadastro
+{% endblock %}
+
+
+{% block navbar %}
+<li class="nav-item">
+          <a class="nav-link active" href="{{ url_for('login') }}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{{ url_for('cadastro') }}">Cadastro</a>
+        </li>
+{% endblock %}
+
+
+{% block body %}
+<div class="col">
+    {% with mensagens = get_flashed_messages(with_categories=True) %}
+        {% if mensagens %}
+        {% for category, mensagem in mensagens %}
+        <div class="alert {{ category }} m-5" id="inner-message">
+            {{ mensagem }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+<form method="POST" class="border m-5 p-5">
+    <h2>Cadastre-se</h2>
+{{ form.csrf_token }}
+    <fieldset>
+    <div class="form-group">
+    {{ form.email.label(class="form-control-label") }}
+    {{ form.email(class="form-control") }}
+    </div>
+    <div class="form-group">
+    {{ form.senha.label(class="form-control-label") }}
+    {{ form.senha(class="form-control") }}
+        </div>
+        <div class="form-group">
+    {{ form.confirma_senha.label(class="form-control-label") }}
+    {{ form.confirma_senha(class="form-control") }}
+            </div>
+         <div class="form-group mb-2">
+    {{ form.token.label(class="form-control-label") }}
+    {{ form.token(class="form-control") }}
+            </div>
+    </fieldset>
+    {{ form.botao_cadastro(class="btn btn-secondary") }}
+
+</form>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "modelo.html" %}
+
+{% block titulo %}
+Consulta API
+{% endblock %}
+
+
+{% block navbar %}
+<li class="nav-item">
+    <a class="nav-link active" href="{{ url_for('logout') }}">Sair</a>
+</li>
+{% endblock %}
+
+
+{% block body %}
+<div class="container ms-mt-me-3 mb-1 p-3">
+
+<form method="POST">
+<div class="input-group mb-2">
+    {{ form.pesquisa(class="form-control", placeholder="Pesquisar E-mail") }}
+    {{ form.botao_pesquisar(class="btn btn-secondary") }}
+</div>
+</form>
+
+    {% with mensagens = get_flashed_messages(with_categories=True) %}
+        {% if mensagens %}
+        {% for category, mensagem in mensagens %}
+        <div class="alert {{ category }}" id="inner-message">
+            {{ mensagem }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>ID Log</th>
+            <th>Cliente</th>
+            <th>E-mail</th>
+            <th>Status Pgto</th>
+            <th>Valor</th>
+            <th>Forma Pgto</th>
+            <th>Parcelas</th>
+            <th>Tratativa</th>
+            <th>Data Tratativa</th>
+        <tr>
+    </thead>
+    <tbody>
+        {% for linha in tabela_paginada %}
+            <tr>
+                <td>{{ linha.id }}</td>
+                <td>{{ linha.nome_cliente }}</td>
+                <td>{{ linha.email_cliente }}</td>
+                <td>{{ linha.status_pgto }}</td>
+                <td>{{ linha.valor }}</td>
+                <td>{{ linha.forma_pgto }}</td>
+                <td>{{ linha.parcelas }}</td>
+                <td>{{ linha.desc_acao }}</td>
+                <td>{{ linha.data_acao }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<div class="container ms-3 mb-2">
+ {% if ant %}
+    <a class="btn btn-secondary" href="{{ ant }}" role="button">Anterior</a>
+    {% endif %}
+    {% if prox %}
+    <a class="btn btn-secondary" href="{{ prox }}" role="button">Próximo</a>
+    {% endif %}
+</div>
+
+{% endblock %}

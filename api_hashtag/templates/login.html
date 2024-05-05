@@ -1,0 +1,56 @@
+{% extends "modelo.html" %}
+
+{% block titulo %}
+Consulta API - Login
+{% endblock %}
+
+
+{% block navbar %}
+<li class="nav-item">
+          <a class="nav-link active" href="{{ url_for('login') }}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{{ url_for('cadastro') }}">Cadastro</a>
+        </li>
+{% endblock %}
+
+
+{% block body %}
+
+{% if next != '/' %}
+  {% with mensagens = get_flashed_messages(with_categories=True) %}
+        {% if mensagens %}
+        {% for category, mensagem in mensagens %}
+        <div class="alert {{ category }} m-5" id="inner-message">
+            {{ mensagem }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+{% endif %}
+<div class="col">
+<form method="POST" class="border m-5 p-5">
+    <h2>Login</h2>
+{{ form.csrf_token }}
+    <fieldset>
+    <div class="form-group">
+    {{ form.email.label(class="form-control-label") }}
+    {{ form.email(class="form-control") }}
+    </div>
+    <div class="form-group">
+    {{ form.senha.label(class="form-control-label") }}
+    {{ form.senha(class="form-control") }}
+        </div>
+
+    </fieldset>
+    {{ form.botao_login(class="btn btn-secondary mt-2") }}
+
+</form>
+    </div>
+
+
+
+
+
+
+{% endblock %}
